@@ -1,4 +1,4 @@
-# [Personal-Projects](#page-title)
+# Personal-Projects {page-title}
 
 A repository of all public personal projects throughout my coding career.
 
@@ -10,19 +10,19 @@ This is the directory for all languages in this repository.
 
 |<h3>Directory</h3>||
 |:---|---:|
-|<h4>HTML,CSS,Javascript</h4>|[Projects](javascript)|
-|<h4>Python</h4>|[Projects](python)|
+|<h4>HTML,CSS,Javascript</h4>|[Projects](#javascript)|
+|<h4>Python</h4>|[Projects](#python)|
 
 ***
 
-## [HTML, CSS, Javascript](#javascript)
+## HTML, CSS, Javascript {javascript}
 
 |<h3>Projects</h3>|Descriptions|
 |---|---|
 |Placeholder|Placeholder for the description.|
 |Placeholder|Placeholder for the description.|
 
-## [Python](#python)
+## Python {python}
 
 |<h3>Projects</h3>|Descriptions|
 |---|---|
@@ -37,4 +37,4 @@ These projects are under the GNU General Public License, because while I enjoy s
 
 [LICENSE](LICENSE)
 
-[Return to Top](page-title)
+[Return to Top](#page-title)
