@@ -1,2 +1,2 @@
 # Python-Projects
-Open Sourced Code of all personal Python projects
+A repository of all personal projects done in python.
