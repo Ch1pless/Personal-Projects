@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8" />
+
+	<head>
+		<title>Simulation</title>
+		<style>
+			* {
+            margin: 0;
+            padding: 0;
+            }
+      h1 {
+          color: rgb(255,255,255);
+          background-color: rgb(50,100,255);
+          position: sticky;
+          display: block;
+          border: 20px rgb(50,100,255) solid;
+          width: 100%;
+          height: 40px;
+          margin-bottom: 20px;
+      }
+      .inputs {
+            width: 300px;
+            height: 150px;
+            padding: 10px 5px;
+            margin-left: 100px;
+            margin-bottom: 1em;
+            background-color: rgb(230,230,230);
+            box-sizing: border-box;
+            border-radius: 4px;
+            box-shadow: 2px 2px 5px -2px;
+      }
+
+      input[type=number] {
+          width:100%;
+          height: 20px;
+          border-radius: 3px;
+          border: 1px solid gray;
+          box-shadow: 0px 0px 2px -1px inset;
+          -moz-appearance: textfield;
+      }
+
+
+      #butt {
+          border: none;
+          border-radius: 2px;
+          background-color: rgb(50,100,255);
+          color: rgb(255,255,255);
+          font-size: 16px;
+          padding: 5px;
+          padding-left: 10px;
+          padding-right: 10px;
+          text-align: center;
+          -webkit-transition-duration: 0.4s;
+          transition-duration: 0.4s;
+          margin-left: 170px;
+          margin-bottom: 1em;
+      }
+      #butt:hover {
+          background-color: rgb(40,90,255);
+          color: rgb(245,245,245);
+          box-shadow: 0 3px 5px rgba(0,0,0,0.15), 0 15px 15px rgba(0,0,0,0.05);
+      }
+      table {
+          margin-left: 20px;
+          border-collapse: collapse;
+          empty-cells: hide;
+
+      }
+      th {
+          background-color: rgb(50,100,255);
+          color: white;
+          padding: 8px;
+          height: 20px;
+          font-size: 1.25em;
+          font-weight: bold;
+          empty-cells: show;
+
+      }
+
+      td {
+        padding: 12px;
+        border: 1px solid lightgray;
+      }
+      td:hover {
+          background-color:  rgb(240,240,240);
+      }
+    </style>
+
+	</head>
+
+	<body>
+
+		<h1>
+			Simulation
+		</h1>
+		<form class='inputs'>
+			<label for='numTest'>Number of Tests: </label>
+			<input type="number" id='numTest' name='numTest' value='100' step='1' />
+			<label for='lengTest'>Test Length: </label>
+			<input type="number" id='lengTest' name='lengTest' value='1' step='1' />
+			<label for='intTest'>Range of test: </label>
+			<input type="number" id='testInt' name='intTest' value='9' step='1' />
+
+		</form>
+		<button id='butt'>
+			Run a simulation
+		</button>
+
+		<table id='tab'>
+
+		</table>
+
+
+		<script>
+			const num = document.getElementById('numTest');
+			const leng = document.getElementById('lengTest');
+			const range = document.getElementById('testInt');
+
+
+			function randoCalc() {
+				const table = document.getElementById('tab');
+				//cleanup
+				while (table.firstChild) {
+					table.removeChild(table.firstChild);
+				}
+				//lets the header pop up and stay
+				let tabhead = document.createElement('th');
+				tabhead.setAttribute("colspan", "10");
+				tabhead.textContent = "Random Number Chart";
+				table.appendChild(tabhead);
+				//creates the rows
+				for (let t = 0; t < num.value / 10; t++) {
+					let tabrow = document.createElement('tr');
+					table.appendChild(tabrow);
+					//creates the number of tests
+					for (let i = 0; i < 10 && document.getElementsByTagName('td').length < num.value; i++) {
+						let tabInfo = document.createElement('td');
+						let testArr = [];
+						//inputs values to test
+						for (let j = 0; j < leng.value; j++) {
+							let rando = `${Math.floor(Math.random() * range.value)}`;
+							//adds zero to the front of one digit numbers when the range is larger
+							let zeroAdd = '0';
+							let rangeChange = range.value - 1;
+							randoLe = rando.length;
+							let rangeLe = rangeChange.toString().length;
+							for (let k = randoLe; k < rangeLe; k++) {
+								rando = zeroAdd.concat(rando);
+							}
+							testArr.push(rando);
+						}
+						//joins the array without commas and then outputs it
+						let testStr = testArr.join("");
+						tabInfo.textContent = testStr;
+						tabrow.appendChild(tabInfo);
+					}
+				}
+			}
+
+			window.addEventListener("load", function() {
+				num.value = num.defaultValue;
+				leng.value = leng.defaultValue;
+				range.value = range.defaultValue;
+			});
+			document.getElementById('butt').addEventListener("click", randoCalc);
+		</script>
+	</body>
+
+</html>
