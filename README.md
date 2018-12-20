@@ -19,15 +19,16 @@ This is the directory for all languages in this repository.
 
 |<h3>Projects</h3>|Descriptions|
 |---|---|
-|Placeholder|Placeholder for the description.|
-|Placeholder|Placeholder for the description.|
+|HTML Templates|HTML/CSS templates for a basic website framework and layout.|
+|Javascript Heavy|Websites that are focused on javascript through canvas, tables, and more.|
+|More To Come||
 
 ## Python
 
 |<h3>Projects</h3>|Descriptions|
 |---|---|
 |Beginner Programs|A set of programs created while learning the beginnings of Python.|
-|Placeholder|Placeholder for the description.|
+|More To Come||
 
 ***
 
