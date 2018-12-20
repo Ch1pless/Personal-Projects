@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8" />
+
+	<head>
+
+		<title>Viewer</title>
+
+		<style>
+			* {
+				margin: 0px;
+				padding: 0px;
+			}
+
+			html,
+			body {
+				margin: inherit;
+				padding: inherit;
+				overflow: hidden;
+			}
+
+			#canvas {
+				margin: inherit;
+				padding: inherit;
+				position: relative;
+				display: block;
+			}
+
+			#inputs {
+				position: absolute;
+				top: 5%;
+				left: 70%;
+				background-color: lightgrey;
+				padding: 10px;
+				border-radius: 4px;
+			}
+			#numberOfPoints,
+			#multiplier {
+				border-radius: 2px;
+			}
+			#runMult {
+				position: absolute;
+				top: 10%;
+				left: 50%;
+				font-weight: bolder;
+				font-size: 25px;
+			}
+			#autoRun {
+				padding-left: 2px;
+				padding-right: 2px;
+				margin: 3px;
+				margin-left: 10%;
+			}
+			#stop {
+				padding-left:2px;
+				padding-right: 2px;
+				margin: 3px;
+				visibility: visible;
+			}
+			#reset {
+				padding-left: 2px;
+				padding-right: 2px;
+				margin: 3px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<canvas id="canvas"></canvas>
+		<form id="inputs">
+			<b>Settings</b> <br />
+			Number of Points <br />
+			<input type="number" id="numberOfPoints" min="0" max="1000" step="1" value="200" /> <br />
+			Static Multiplier <br />
+			<input type="number" id="multiplier" min="1" max="500" value="2" /> <br />
+			<input type="button" id="autoRun" value="Run Automatically" /> <br />
+			<input type="button" id="stop" value="Stop Running" />
+			<input type="button" id="reset" value="Reset" /> <br />
+		</form>
+
+		<p id="runMult">
+
+		</p>
+
+		<script>
+			//sets canvas so it uses full resolution
+			function setupCanvas(canvas) {
+				let dpr = window.devicePixelRatio || 1;
+				canvas.width = window.innerWidth * dpr;
+				canvas.height = window.innerHeight * dpr;
+				let ctx = canvas.getContext('2d');
+				ctx.scale(dpr, dpr);
+				return ctx;
+			}
+
+
+			//defines the canvas for drawing
+			const c = document.getElementById("canvas");
+			const ctx = setupCanvas(c);
+			//interval for drawing
+			const inter = setInterval(draw, 30);
+			//inputs
+			const numPoint = document.getElementById("numberOfPoints");
+			const mult = document.getElementById("multiplier");
+
+			c.width = window.innerWidth;
+			c.height = window.innerHeight;
+
+			//runs simulation
+			let interrun;
+			let count = 0;
+
+			function run() {
+				count += 0.002;
+				count = Number.parseFloat(count).toFixed(3);
+				count = parseFloat(count);
+			}
+
+
+			//draws
+			function draw() {
+				//sets up positional variables
+				let width = c.width;
+				let height = c.height;
+				let centerX = width / 2;
+				let centerY = height / 2;
+				ctx.fillStyle = "rgb(255,255,255)";
+				ctx.fillRect(0, 0, width, height);
+				ctx.fillStyle = "rgb(0,0,0)";
+				let circleCenterX = centerX - width / 4;
+				let radius = height / 3;
+				//draws large circle to run simulation on
+				ctx.beginPath();
+				ctx.arc(circleCenterX, centerY, radius, 0, Math.PI * 2);
+				ctx.stroke()
+
+				let multi = parseInt(mult.value) + count;
+				//displays the points and lines
+				for (let i = 0; i < numPoint.value; i++) {
+					//positions
+					let pointSeperator = Math.PI * 2 / numPoint.value;
+					let pointX = circleCenterX - (radius * Math.cos(i * pointSeperator));
+					let pointY = centerY - radius * Math.sin(i * pointSeperator);
+					let pointXn = circleCenterX - (radius * Math.cos((i * multi) * pointSeperator));
+					let pointYn = centerY - radius * Math.sin((i * multi) * pointSeperator);
+					//line drawer
+					ctx.fillStyle = "rgb(0,0,0)";
+					ctx.lineWidth = 0.5;
+					ctx.beginPath();
+					ctx.moveTo(pointX, pointY);
+					ctx.lineTo(pointXn, pointYn);
+					ctx.stroke();
+					ctx.lineWidth = 1;
+					//point drawer
+					ctx.fillStyle = "rgb(100,255,100)";
+					ctx.beginPath();
+					ctx.arc(pointX, pointY, 3, 0, Math.PI * 2);
+					ctx.fill();
+				}
+				//changing values when running simulation
+				document.getElementById("runMult").innerText = multi;
+			}
+			//to resize the canvas with the window size
+			window.addEventListener("resize", function() {
+				c.width = window.innerWidth;
+				c.height = window.innerHeight;
+			});
+			//to reset inputs on reload
+			window.addEventListener("load", function() {
+				numPoint.value = numPoint.defaultValue;
+				mult.value = mult.defaultValue;
+			});
+			//draws on canvas
+			document.addEventListener("load", draw);
+			//runs simulation
+			document.getElementById("autoRun").addEventListener("click", function() {
+				interrun = setInterval(run, 60);
+				document.getElementById("inputs").style.visibility = "hidden";
+			});
+			//stops simulation
+			document.getElementById("stop").addEventListener("click", function() {
+				clearInterval(interrun);
+				document.getElementById("inputs").style.visibility = "visible";
+			});
+			//resets simulation
+			document.getElementById("reset").addEventListener("click", function() {
+				count = 0;
+			});
+			//resets multiplier on simulation reset
+			mult.addEventListener("input", function() {
+				count = 0;
+			});
+		</script>
+
+	</body>
+
+</html>
