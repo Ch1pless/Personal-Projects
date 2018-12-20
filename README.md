@@ -19,8 +19,8 @@ This is the directory for all languages in this repository.
 
 |<h3>Projects</h3>|Descriptions|
 |---|---|
-|HTML Templates|HTML/CSS templates for a basic website framework and layout.|
-|Javascript Heavy|Websites that are focused on javascript through canvas, tables, and more.|
+|[HTML Templates](html_css_javascript/templates)|HTML/CSS templates for a basic website framework and layout.|
+|[Javascript Heavy](html_css_javascript/javascriptHeavy)|Websites that are focused on javascript through canvas, tables, and more.|
 |More To Come||
 
 ## Python
