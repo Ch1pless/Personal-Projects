@@ -7,4 +7,4 @@ if word == rev :
 	print(userinput + " is a palindrome.")
 else :
 	print(userinput + " is not a palindrome.")
-print('*'*20)
+input("\nPress any key to exit\n"+'*'*20)

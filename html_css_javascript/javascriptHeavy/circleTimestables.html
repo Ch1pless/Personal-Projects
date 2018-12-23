@@ -84,7 +84,6 @@
 		</p>
 
 		<script>
-			//sets canvas so it uses full resolution
 			function setupCanvas(canvas) {
 				let dpr = window.devicePixelRatio || 1;
 				canvas.width = window.innerWidth * dpr;
@@ -94,100 +93,104 @@
 				return ctx;
 			}
 
-
-			//defines the canvas for drawing
 			const c = document.getElementById("canvas");
 			const ctx = setupCanvas(c);
-			//interval for drawing
-			const inter = setInterval(draw, 30);
-			//inputs
-			const numPoint = document.getElementById("numberOfPoints");
-			const mult = document.getElementById("multiplier");
 
 			c.width = window.innerWidth;
 			c.height = window.innerHeight;
 
-			//runs simulation
-			let interrun;
 			let count = 0;
+			let interrun;
 
-			function run() {
+			function startSim() {
 				count += 0.002;
 				count = Number.parseFloat(count).toFixed(3);
 				count = parseFloat(count);
 			}
 
+			let drawBackground = function() {
+				ctx.fillStyle = "rgb(255,255,255)";
+				ctx.fillRect(0, 0, width, height);
+			}
 
-			//draws
+			let drawCircle = function(x, y, r) {
+				ctx.beginPath();
+				ctx.arc(x, y, r, 0, Math.PI * 2);
+				ctx.stroke()
+			}
+
+			let drawLine = function(x, y, xn, yn) {
+				ctx.beginPath();
+				ctx.moveTo(x, y);
+				ctx.lineTo(xn, yn);
+				ctx.stroke();
+			}
+
+			let drawPoint = function(x, y) {
+				ctx.beginPath();
+				ctx.arc(x, y, 3, 0, Math.PI * 2);
+				ctx.fill();
+			}
+
+
+			const inter = setInterval(draw, 30);
+			const numPoint = document.getElementById("numberOfPoints");
+			const mult = document.getElementById("multiplier");
+
 			function draw() {
-				//sets up positional variables
 				let width = c.width;
 				let height = c.height;
 				let centerX = width / 2;
 				let centerY = height / 2;
-				ctx.fillStyle = "rgb(255,255,255)";
-				ctx.fillRect(0, 0, width, height);
+				drawBackground();
 				ctx.fillStyle = "rgb(0,0,0)";
 				let circleCenterX = centerX - width / 4;
 				let radius = height / 3;
-				//draws large circle to run simulation on
-				ctx.beginPath();
-				ctx.arc(circleCenterX, centerY, radius, 0, Math.PI * 2);
-				ctx.stroke()
+				drawCircle(circleCenterX, centerY, radius);
 
 				let multi = parseInt(mult.value) + count;
-				//displays the points and lines
 				for (let i = 0; i < numPoint.value; i++) {
-					//positions
 					let pointSeperator = Math.PI * 2 / numPoint.value;
 					let pointX = circleCenterX - (radius * Math.cos(i * pointSeperator));
 					let pointY = centerY - radius * Math.sin(i * pointSeperator);
 					let pointXn = circleCenterX - (radius * Math.cos((i * multi) * pointSeperator));
 					let pointYn = centerY - radius * Math.sin((i * multi) * pointSeperator);
-					//line drawer
 					ctx.fillStyle = "rgb(0,0,0)";
 					ctx.lineWidth = 0.5;
-					ctx.beginPath();
-					ctx.moveTo(pointX, pointY);
-					ctx.lineTo(pointXn, pointYn);
-					ctx.stroke();
+					drawLine(pointX, pointY, pointXn, pointYn);
 					ctx.lineWidth = 1;
-					//point drawer
 					ctx.fillStyle = "rgb(100,255,100)";
-					ctx.beginPath();
-					ctx.arc(pointX, pointY, 3, 0, Math.PI * 2);
-					ctx.fill();
+					drawPoint(pointX, pointY);
 				}
-				//changing values when running simulation
 				document.getElementById("runMult").innerText = multi;
 			}
-			//to resize the canvas with the window size
+
 			window.addEventListener("resize", function() {
 				c.width = window.innerWidth;
 				c.height = window.innerHeight;
 			});
-			//to reset inputs on reload
+
 			window.addEventListener("load", function() {
 				numPoint.value = numPoint.defaultValue;
 				mult.value = mult.defaultValue;
 			});
-			//draws on canvas
+
 			document.addEventListener("load", draw);
-			//runs simulation
+
 			document.getElementById("autoRun").addEventListener("click", function() {
-				interrun = setInterval(run, 60);
+				interrun = setInterval(startSim, 60);
 				document.getElementById("inputs").style.visibility = "hidden";
 			});
-			//stops simulation
+
 			document.getElementById("stop").addEventListener("click", function() {
 				clearInterval(interrun);
 				document.getElementById("inputs").style.visibility = "visible";
 			});
-			//resets simulation
+
 			document.getElementById("reset").addEventListener("click", function() {
 				count = 0;
 			});
-			//resets multiplier on simulation reset
+
 			mult.addEventListener("input", function() {
 				count = 0;
 			});

@@ -91,10 +91,7 @@
 			let n = document.getElementById('start').value;
 			let id;
 
-			function startIt() {
-				id = setInterval(primeCount, 1);
-				return id
-			}
+			let start = () => id = setInterval(primeCount, 1);
 
 			function primeCount() {
 				let cont = document.getElementById('primeCont');
@@ -115,7 +112,7 @@
 				}
 
 				if (isPrime) {
-					let primeInput = n.toString();
+					let number = n.toString();
 					let prime = document.createTextNode(primeInput);
 					li.appendChild(prime);
 					cont.appendChild(li);
@@ -123,12 +120,10 @@
 				n++;
 			}
 
-			function stopIt() {
-				clearInterval(id);
-			}
+			let stop = () => clearInterval(id);
 
-			document.getElementById('stopButt').addEventListener('click', stopIt);
-			document.getElementById('primeButt').addEventListener('click', startIt);
+			document.getElementById('primeButt').addEventListener('click', start);
+			document.getElementById('stopButt').addEventListener('click', stop);
 			document.getElementById('primeButt').addEventListener('click', primeCount);
 		</script>
 
