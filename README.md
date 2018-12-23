@@ -8,10 +8,10 @@ A repository of all public personal projects throughout my coding career.
 
 This is the directory for all languages in this repository.
 
-|<h3>Directory</h3>||
-|:---|---:|
-|<h4>HTML,CSS,Javascript</h4>|[Projects](#html-css-javascript)|
-|<h4>Python</h4>|[Projects](#python)|
+|<h3>Directory</h3>|||
+|:---|---:|:---|
+|<h4>HTML,CSS,Javascript</h4>|[Projects](#html-css-javascript)|[Full File](html_css_javascript)|
+|<h4>Python</h4>|[Projects](#python)|[Full File](python)|
 
 ***
 
