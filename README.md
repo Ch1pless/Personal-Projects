@@ -27,7 +27,7 @@ This is the directory for all languages in this repository.
 
 |<h3>Projects</h3>|Descriptions|
 |---|---|
-|Beginner Programs|A set of programs created while learning the beginnings of Python.|
+|[Beginner Programs](python/beginnerPrograms)|A set of programs created while learning the beginnings of Python.|
 |More To Come||
 
 ***
